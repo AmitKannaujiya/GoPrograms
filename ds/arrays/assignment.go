@@ -133,3 +133,24 @@ func findMaxAverage(nums []int, k int) float64 {
     }
     return max
 }
+
+func sortColors(nums []int) {
+	start, mid, end := 0, 0, len(nums)-1
+    // <= is needed when mid is at 1 by swaping 2 and loops end with some pending operations
+    // try for [2, 0, 1] case
+	for mid <= end {
+        // if mid is at 0 , swap it with start as start points to 0
+		if nums[mid] == 0 {
+			nums[mid], nums[start] = nums[start], nums[mid]
+			mid++
+			start++
+            // if mid is at 1, it is at correct place 
+		} else if nums[mid] == 1 {
+			mid++
+		} else {
+            // mid is at 2, swap it with end and just decrease end 
+			nums[mid], nums[end] = nums[end], nums[mid]
+			end-- // mid is not incremented as it is similar to binary sort and end is at right side 
+		}
+	}
+}
