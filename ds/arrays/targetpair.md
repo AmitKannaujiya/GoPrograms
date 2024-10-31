@@ -21,8 +21,8 @@ Explanation: None of the pair makes a sum of 11
 
 ### Constraints
 
--    1 ≤ arr.size ≤ 105
--    1 ≤ arr[i] ≤ 105
+-    1 ≤ arr.size ≤ 10^5
+-    1 ≤ arr[i] ≤ 10^5
 
 <!-- **Note**: This recursive solution lead to a time limit exceeded (TLE) error on large inputs because of the exponential time complexity. In the future, we will solve this problem using dynamic programming to optimize the solution and pass all test cases. -->
 
