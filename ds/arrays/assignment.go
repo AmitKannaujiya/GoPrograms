@@ -111,3 +111,25 @@ func removeDuplicates(nums []int) int {
     }
     return correctIndex + 1
 }
+
+// Sliding window approach to find maximum
+func findMaxAverage(nums []int, k int) float64 {
+    max := -12121122211.656 // minFloat not available in lib so used some dummy valye
+    start, sum := 0, 0
+    for end:=0; end < len(nums); end++ {
+        // add element in window
+        sum += nums[end]
+        if end - start + 1 == k {
+            // calculate average when window is reached
+            avrage := float64(sum) / float64(k)
+            // update max
+            if max < avrage {
+                max = avrage
+            }
+            // remove element from window
+            sum -= nums[start]
+            start++
+        }
+    }
+    return max
+}
