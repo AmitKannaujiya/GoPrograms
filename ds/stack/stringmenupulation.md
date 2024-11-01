@@ -38,28 +38,21 @@ import (
 )
 
 func removeConsecutiveSame(words []string) int {
-	// base case
-	if mid == 0 {
-		return stack[0]	
+	stack := []string{}
+	for _, word :=  range words {
+		if (len(stack) > 0  && stack[len(stack) - 1] == word) {
+			stack = stack[:len(stack) - 1] //  pop last element
+		} else {
+			stack = append(stack, word) //  push word
+		}
 	}
-	// 1 case
-	size := len(stack)
-	top := stack[size-1]
-	stack = stack[:size-1]
-	m := findMiddleOfStack(stack, mid-1)
-	stack = append(stack, top)
-	return m
+	return len(stack)
 }
 
 // Function to initialize the recursion with starting indices of 0
 func main() {
-    stack := []string{}
-    stack = append(stack, 1)
-    stack = append(stack, 5)
-    stack = append(stack, 6)
-    stack = append(stack, 2)
-    stack = append(stack, 8)
-    fmt.Println(findMiddle(stack, mid)) //  print : 6
+    words := []string{"ab", "aa", "aa", "bcd", "ab"}
+    fmt.Println(removeConsecutiveSame(words)) //  print : 3
 }
 
 Time Complexity = O(n)
