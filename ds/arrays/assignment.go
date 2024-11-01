@@ -238,3 +238,16 @@ func findMissingAndRepeatingElement(nums []int) []int {
 	}
 	return ans
 }
+
+func firstRepeated(nums []int) int {
+	freqMap := make(map[int]int, len(nums))
+	for _, num := range nums {
+		freqMap[num]++
+	}
+	for i, num := range nums {
+		if freqMap[num] > 1 {
+			return i + 1 // 1 based index 
+		}
+	}
+	return -1
+}
