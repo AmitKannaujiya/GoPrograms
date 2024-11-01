@@ -154,3 +154,24 @@ func sortColors(nums []int) {
 		}
 	}
 }
+
+// copy positive first, then copy negative
+func segregateElements(nums []int) {
+	copy := make([]int, len(nums))
+    p := 0
+	for i := 0; i < len(nums); i++ {
+        if nums[i] > 0 {
+            copy[p] = nums[i]
+            p++
+        }
+	}
+    for i := 0; i < len(nums); i++ {
+        if nums[i] < 0 {
+            copy[p] = nums[i]
+            p++
+        }
+	}
+    for i := 0; i < len(nums); i++ {
+        nums[i] = copy[i]
+    }
+}
