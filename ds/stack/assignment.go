@@ -99,3 +99,33 @@ func checkSortedIterative(stack []int) bool {
 	}
 	return true
 }
+
+func insertBottom(stack *[]int, element int) {
+	// empty stack insert
+	if len(*stack) == 0 {
+		*stack = append(*stack, element)
+		return
+	}
+	old := *stack
+	top := old[len(old) - 1] // pull top
+	*stack = old[:len(old) - 1]
+	insertBottom(stack, element) // insert element recursively
+	*stack = append(*stack, top) // now put top back in stack
+}
+
+func reverseStack(stack *[]int) {
+	//base case
+	if len(*stack) == 0 {
+		return
+	}
+	old := *stack
+	//1 case
+	top := old[len(old) - 1] // pull top element
+	*stack = old[:len(old) - 1]
+
+	reverseStack(stack) // recursive call for rest of element
+
+	insertBottom(stack, top) // insert element at the end
+
+	// rec
+}

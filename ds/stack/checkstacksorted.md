@@ -5,9 +5,18 @@ find the middle elment of stack
 ### Example 1
 
 ```
-Input: stak = [1,12,-5,-6,50,3]
-Output: -6
-Explanation: len = 6, mid = 3 , mid elm = -6
+Input: stack = [1, 12, 30, 40, 45]
+Output: true
+Explanation: all element inserted in increasing order
+
+```
+
+### Example 1
+
+```
+Input: stack = [1, 12, 30, 40, 35]
+Output: false
+Explanation: 35 is less than 40
 
 ```
 

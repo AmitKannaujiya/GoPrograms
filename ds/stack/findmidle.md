@@ -5,7 +5,7 @@ find the middle elment of stack
 ### Example 1
 
 ```
-Input: stak = [1,12,-5,-6,50,3]
+Input: stack = [1,12,-5,-6,50,3]
 Output: -6
 Explanation: len = 6, mid = 3 , mid elm = -6
 
