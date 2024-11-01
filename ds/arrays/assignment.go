@@ -175,3 +175,36 @@ func segregateElements(nums []int) {
         nums[i] = copy[i]
     }
 }
+
+func findDuplicate(nums []int) int {
+	freqMap := make(map[int]int, len(nums))
+	// count freq of each no
+	for _, num := range freqMap {
+		freqMap[num]++
+		if freqMap[num] > 1 {
+			return num
+		}
+	}
+	// return for safe exit
+	return -1
+}
+// cyclic sort : execution of below array
+// 2, 3, 1, 5, 0 swap 2 with 1
+// 1, 3, 2, 5, 0 swap 1 with 3
+// 3, 1, 2, 5, 0 swap 3 with 5
+// 5, 1, 2, 3, 0 swap 5 with 0
+// 0, 1, 2, 3, 5 now every element is at correct position
+// increament i from 0 till 5 as all elements are at correct position
+func findDuplicateCyclicSort(nums []int) int {
+	i := 0
+	n := len(nums)
+	for i < n {
+		correctIndex := nums[i] - 1 // as nos are 1 to n
+		if nums[i] != nums[correctIndex] {
+			nums[i], nums[correctIndex] = nums[correctIndex], nums[i]
+		} else {
+			i++ // move to next index
+		}
+	}
+	return nums[n-1] //  as duplicate no will move to end 
+}
