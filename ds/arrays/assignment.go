@@ -1,5 +1,11 @@
 package arrays
 
+import (
+	"go-program/ds/utill"
+	"go-programs/ds/utill"
+	"math"
+)
+
 // nums array can be positive and unsorted
 func TargetPairExists(nums []int, target int) bool {
 	// create a map to store sum is found or not
@@ -207,4 +213,28 @@ func findDuplicateCyclicSort(nums []int) int {
 		}
 	}
 	return nums[n-1] //  as duplicate no will move to end 
+}
+
+func findMissingAndRepeatingElement(nums []int) []int {
+	ans := make([]int , 2)
+
+	for i:=0; i < len(nums); i++ {
+		index := utill.ABS(nums[i]) // math.abs is used because 
+		// mark the element as visited , convert it to negative
+		if nums[index - 1] > 0 {
+			nums[index - 1] *= -1
+		} else {
+			// if it is already negative means it is seen previously 
+			// this will be repeated element
+			ans = append(ans, index)
+		}
+	}
+	for i:=0; i < len(nums); i++ {
+		if nums[i] > 0 {
+			// If some element is positive means 
+			// that index is missing
+			ans = append(ans, i + 1)
+		}
+	}
+	return ans
 }
