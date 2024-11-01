@@ -56,6 +56,19 @@ func TestReverseStack(t *testing.T) {
 	stack = append(stack, 8)
 	stack = append(stack, 10)
 	reverseStack(&stack)
-	
+
 	assert.ElementsMatch(t, stack, []int{10, 8, 7, 4, 1})
+}
+
+func TestMakeValidParentheses(t *testing.T) {
+	assert.Equal(t, 3, minAddToMakeValid("(((()"))
+	assert.Equal(t, 4, minAddToMakeValid("(((("))
+	assert.Equal(t, 0, minAddToMakeValid(""))
+}
+
+func TestConsicutiveSame(t *testing.T) {
+	words := []string{"tom", "jerry", "jerry", "tom"}
+	assert.Equal(t, 0, removeConsecutiveSame(words))
+	words = []string{"ab", "aa", "aa", "bcd", "ab"}
+	assert.Equal(t, 3, removeConsecutiveSame(words))
 }

@@ -129,3 +129,36 @@ func reverseStack(stack *[]int) {
 
 	// rec
 }
+
+func minAddToMakeValid(s string) int {
+    stack := []byte{}
+    count := 0
+    for i:=0; i < len(s); i++ {
+        ch := s[i]
+        if ch == '(' {
+            stack = append(stack, ch)
+        } else {
+            // empty stack, increment count
+            if len(stack) == 0 {
+                count++
+            } else {
+                // pop the opening bracket
+                stack = stack[:len(stack) - 1]
+            }
+        }
+    }
+    // total matching brackets + remainig brackets
+    return count + len(stack)
+}
+
+func removeConsecutiveSame(words []string) int {
+	stack := []string{}
+	for _, word :=  range words {
+		if (len(stack) > 0  && stack[len(stack) - 1] == word) {
+			stack = stack[:len(stack) - 1] //  pop last element
+		} else {
+			stack = append(stack, word) //  push word
+		}
+	}
+	return len(stack)
+}

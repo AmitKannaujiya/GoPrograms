@@ -2,8 +2,7 @@ package arrays
 
 import (
 	"go-program/ds/utill"
-	"go-programs/ds/utill"
-	"math"
+	_ "math"
 )
 
 // nums array can be positive and unsorted
