@@ -72,3 +72,28 @@ func TestConsicutiveSame(t *testing.T) {
 	words = []string{"ab", "aa", "aa", "bcd", "ab"}
 	assert.Equal(t, 3, removeConsecutiveSame(words))
 }
+
+func TestBackSpaceStringCompare(t *testing.T) {
+	assert.Equal(t, false, backspaceCompare("ab##", "ad#c"))
+	assert.Equal(t, true, backspaceCompare("ab##", "c#d#"))
+	assert.Equal(t, false, backspaceCompare("a#c", "b"))
+}
+
+func TestCheckRedundantBracket(t *testing.T) {
+	assert.Equal(t, false, checkRedundantBracket("(a+b)"))
+	assert.Equal(t, true, checkRedundantBracket("((a+b))"))
+	assert.Equal(t, false, checkRedundantBracket("c+d+(a+b)"))
+	assert.Equal(t, false, checkRedundantBracket("(c+d+(a+b)"))
+}
+
+func TestGenerateNextGreaterElementFirst(t *testing.T) {
+	assert.Equal(t, []int{2, 3, 4, -1}, generateNextGreaterElementFirst([]int{1, 2, 3, 4}))
+	assert.Equal(t, []int{8, 8, -1, 4, 7, 4, 4, 7, -1}, generateNextGreaterElementFirst([]int{6, 5, 8, 3, 4, 2, 1, 4, 7}))
+	assert.Equal(t, []int{-1, -1, -1, -1}, generateNextGreaterElementFirst([]int{4, 3, 2, 1}))
+}
+
+func TestGenerateNextGreaterElementSecond(t *testing.T) {
+	assert.Equal(t, []int{2, 3, 4, -1}, generateNextGreaterElementSecond([]int{1, 2, 3, 4}))
+	assert.Equal(t, []int{8, 8, -1, 4, 7, 4, 4, 7, -1}, generateNextGreaterElementSecond([]int{6, 5, 8, 3, 4, 2, 1, 4, 7}))
+	assert.Equal(t, []int{-1, -1, -1, -1}, generateNextGreaterElementSecond([]int{4, 3, 2, 1}))
+}

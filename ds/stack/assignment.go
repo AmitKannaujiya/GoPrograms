@@ -2,6 +2,7 @@ package stack
 
 import (
 	"errors"
+	"fmt"
 	_ "fmt"
 	"go-program/ds/utill"
 )
@@ -161,4 +162,87 @@ func removeConsecutiveSame(words []string) int {
 		}
 	}
 	return len(stack)
+}
+
+func backspaceCompare(s string, t string) bool {
+    stack1 := []byte{}
+    for i:=0; i < len(s); i++ {
+        ch := s[i]
+        if ch == '#' && len(stack1) > 0{
+            stack1 = stack1[:len(stack1) - 1]
+        } else if ch != '#' {
+            stack1 = append(stack1 , ch)
+        }
+    }
+    stack2 := []byte{}
+    for i:=0; i < len(t); i++ {
+        ch := t[i]
+        if ch == '#' && len(stack2) > 0{
+            stack2 = stack2[:len(stack2) - 1]
+        } else if ch != '#' {
+            stack2 = append(stack2 , ch)
+        }
+    }
+    return string(stack1) == string(stack2)
+}
+
+func checkRedundantBracket(s string) bool {
+	stack := []byte{}
+	for i:=0; i< len(s); i++ {
+		if s[i] == '(' || s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' {
+			stack = append(stack, s[i])
+		} else if s[i] == ')' {
+			size := len(stack)
+			if stack[size - 1] == '(' {
+				return true
+			}
+			for size > 0 && stack[size - 1] != '(' {
+				stack = stack[:size - 1]
+				size--
+			}
+			if size > 0 && stack[size - 1] == '(' {
+				stack = stack[:size - 1]
+			}
+		}
+	}
+	return false
+}
+
+func generateNextGreaterElementFirst(nums []int) []int{
+	result := make([]int, len(nums)) 
+	for i:=0; i< len(nums); i++ {
+		num := nums[i]
+		j := i + 1
+		for ; j < len(nums); j++ {
+			if num < nums[j] {
+				result[i] = nums[j]
+				break
+			}
+		}
+		if j == len(nums) {
+			result[i] = -1
+		}
+	}
+	return result
+}
+
+func generateNextGreaterElementSecond(nums []int) []int{
+	stack := []int{}
+	result := make([]int, len(nums)) 
+	for i:=0; i < len(nums); i++ {
+		nge := -1
+		size := len(stack)-1
+		for size >= 0 && nums[stack[size]] < nums[i] {
+			fmt.Println(nums[stack[size]], nums[i])
+			stack = stack[:size]
+			size--
+		}
+		if size >= 0 {
+			nge = nums[stack[size]]
+		}
+		stack = append(stack, i)
+		
+		result[i] = nge
+	}
+	return result
 }
