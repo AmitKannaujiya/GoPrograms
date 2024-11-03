@@ -2,7 +2,6 @@ package stack
 
 import (
 	"errors"
-	"fmt"
 	_ "fmt"
 	"go-program/ds/utill"
 )
@@ -229,11 +228,10 @@ func generateNextGreaterElementFirst(nums []int) []int{
 func generateNextGreaterElementSecond(nums []int) []int{
 	stack := []int{}
 	result := make([]int, len(nums)) 
-	for i:=0; i < len(nums); i++ {
+	for i:=len(nums)-1; i >=0; i-- {
 		nge := -1
 		size := len(stack)-1
-		for size >= 0 && nums[stack[size]] < nums[i] {
-			fmt.Println(nums[stack[size]], nums[i])
+		for size >= 0 && nums[stack[size]] <= nums[i] {
 			stack = stack[:size]
 			size--
 		}
@@ -245,4 +243,30 @@ func generateNextGreaterElementSecond(nums []int) []int{
 		result[i] = nge
 	}
 	return result
+}
+
+func nextGreaterElements(nums []int) []int {
+    nextGreater := make([]int, len(nums))
+    stack := CreateStack[int]()
+    for i:= len(nums) - 1; i >= 0; i-- {
+        stack.Push(i)
+    }
+    for i:= len(nums) - 1; i >= 0; i-- {
+        nge := -1
+        for !stack.IsEmpty() {
+			t, _ :=stack.Top()
+			if nums[t] <= nums[i] {
+				stack.Pop()
+			} else {
+				break
+			}
+        }
+        if !stack.IsEmpty() {
+			t, _ :=stack.Top()
+            nge = nums[t]
+        }
+        stack.Push(i)
+        nextGreater[i] = nge
+    }
+    return nextGreater
 }

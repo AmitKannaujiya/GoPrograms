@@ -40,34 +40,30 @@ Output: [-1, -1, -1, -1]
 package main
 import "fmt"
 
-func checkRedundantBracket(s string) bool {
-	stack := []byte{}
-	for i:=0; i< len(s); i++ {
-		if s[i] == '(' || s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' {
-			stack = append(stack, s[i])
-		} else if s[i] == ')' {
-			size := len(stack)
-			if stack[size - 1] == '(' {
-				return true
-			}
-			for size > 0 && stack[size - 1] != '(' {
-				stack = stack[:size - 1]
-				size--
-			}
-			if size > 0 && stack[size - 1] == '(' {
-				stack = stack[:size - 1]
-			}
+func generateNextGreaterElementSecond(nums []int) []int{
+	stack := []int{}
+	result := make([]int, len(nums)) 
+	for i:=len(nums)-1; i >=0; i-- {
+		nge := -1
+		size := len(stack)-1
+		for size >= 0 && nums[stack[size]] <= nums[i] {
+			stack = stack[:size]
+			size--
 		}
+		if size >= 0 {
+			nge = nums[stack[size]]
+		}
+		stack = append(stack, i)
+		
+		result[i] = nge
 	}
-	return false
+	return result
 }
 
-// Function to initialize the recursion with starting indices of 0
 func main() {
-    fmt.Println(checkRedundantBracket("(a+b)")) //  print : false
-    fmt.Println(checkRedundantBracket("((a+b))")) //  print : true
-    fmt.Println(checkRedundantBracket("c+d+(a+b)")) //  print : false
-    fmt.Println(checkRedundantBracket("(c+d+(a+b)")) //  print : false
+    fmt.Println(generateNextGreaterElementSecond([]int{1, 2, 3, 4})) //  print : 2, 3, 4, -1
+    fmt.Println(generateNextGreaterElementSecond([]int{6, 5, 8, 3, 4, 2, 1, 4, 7})) //  print : 8, 8, -1, 4, 7, 4, 4, 7,-1
+    fmt.Println(generateNextGreaterElementSecond([]int{4, 3, 2, 1})) //  print : -1, -1, -1, -1
 }
 
 Time Complexity = O(n)

@@ -97,3 +97,9 @@ func TestGenerateNextGreaterElementSecond(t *testing.T) {
 	assert.Equal(t, []int{8, 8, -1, 4, 7, 4, 4, 7, -1}, generateNextGreaterElementSecond([]int{6, 5, 8, 3, 4, 2, 1, 4, 7}))
 	assert.Equal(t, []int{-1, -1, -1, -1}, generateNextGreaterElementSecond([]int{4, 3, 2, 1}))
 }
+
+func TestGenerateNextGreaterElement2Second(t *testing.T) {
+	assert.Equal(t, []int{2,-1,2}, nextGreaterElements([]int{1,2,1}))
+	assert.Equal(t, []int{2,3,4,-1,4}, nextGreaterElements([]int{1,2,3,4,3}))
+	assert.Equal(t, []int{-1, 4, 4, 4}, nextGreaterElements([]int{4, 3, 2, 1}))
+}
