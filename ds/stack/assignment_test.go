@@ -99,7 +99,19 @@ func TestGenerateNextGreaterElementSecond(t *testing.T) {
 }
 
 func TestGenerateNextGreaterElement2Second(t *testing.T) {
-	assert.Equal(t, []int{2,-1,2}, nextGreaterElements([]int{1,2,1}))
-	assert.Equal(t, []int{2,3,4,-1,4}, nextGreaterElements([]int{1,2,3,4,3}))
+	assert.Equal(t, []int{2, -1, 2}, nextGreaterElements([]int{1, 2, 1}))
+	assert.Equal(t, []int{2, 3, 4, -1, 4}, nextGreaterElements([]int{1, 2, 3, 4, 3}))
 	assert.Equal(t, []int{-1, 4, 4, 4}, nextGreaterElements([]int{4, 3, 2, 1}))
+}
+
+func TestGenerateNextSmallerElementFirst(t *testing.T) {
+	assert.Equal(t, []int{-1, -1, -1, -1}, generateNextSmallerElementFirst([]int{1, 2, 3, 4}))
+	assert.Equal(t, []int{5, 3, 3, 2, 2, 1, -1, -1, -1}, generateNextSmallerElementFirst([]int{6, 5, 8, 3, 4, 2, 1, 4, 7}))
+	assert.Equal(t, []int{3, 2, 1, -1}, generateNextSmallerElementFirst([]int{4, 3, 2, 1}))
+}
+
+func TestGenerateNextSmallerElement2Second(t *testing.T) {
+	assert.Equal(t, []int{-1, -1, -1, -1}, nextSmallerElements([]int{1, 2, 3, 4}))
+	assert.Equal(t, []int{5, 3, 3, 2, 2, 1, -1, -1, -1}, nextSmallerElements([]int{6, 5, 8, 3, 4, 2, 1, 4, 7}))
+	assert.Equal(t, []int{3, 2, 1, -1}, nextSmallerElements([]int{4, 3, 2, 1}))
 }
