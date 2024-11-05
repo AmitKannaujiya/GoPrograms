@@ -250,3 +250,27 @@ func firstRepeated(nums []int) int {
 	}
 	return -1
 }
+
+func possibleSums(coins []int, quants []int) int {
+	sumMap := make(map[int]struct{})
+	possibleSumRec(coins, quants, 0, 0, sumMap)
+	delete(sumMap, 0)
+	return len(sumMap)
+}
+
+func possibleSumRec(coins []int, quants []int, index , sum int, sumMap map[int]struct{}) {
+	// base case
+
+	if index == len(coins) {
+		sumMap[sum] = struct{}{}
+		return
+	}
+
+	// 1 case
+	for i:=0; i <= quants[index]; i++ {
+		newSum := sum + coins[index] * i
+		possibleSumRec(coins, quants, index + 1, newSum, sumMap)
+	}
+
+	// recursion
+}
