@@ -7,4 +7,5 @@ import (
 
 func TestPossibleSumRec(t *testing.T) {
 	assert.Equal(t, 9, possibleSums([]int{10, 50, 100}, []int{1, 2, 1}))
+	assert.Equal(t, 9, possibleSumIterative([]int{10, 50, 100}, []int{1, 2, 1}))
 }

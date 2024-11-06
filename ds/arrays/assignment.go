@@ -276,3 +276,24 @@ func possibleSumRec(coins []int, quants []int, index, sum int, sumMap map[int]st
 
 	// recursion
 }
+
+func possibleSumIterative(coins []int, quants []int) int {
+	sumMap := make(map[int]struct{})
+	sumMap[0] = struct{}{}
+	for i, coin := range coins {
+		count := quants[i]
+		currentSUmMap := make(map[int]struct{})
+		for s := range sumMap{
+			for j:=1; j <= count; j++ {
+				cs := s + coin * j
+				currentSUmMap[cs] = struct{}{}
+			}
+		}
+
+		for s := range currentSUmMap {
+			sumMap[s] = struct{}{}
+		}
+	}
+	delete(sumMap, 0)
+	return len(sumMap)
+}
