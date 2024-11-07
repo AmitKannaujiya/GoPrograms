@@ -307,3 +307,69 @@ func nextSmallerElements(nums []int) []int {
 	}
 	return result
 }
+
+type MinData struct {
+	min   int
+	value int
+}
+type StackData []MinData
+
+func (m StackData) Len() int {
+	return len(m)
+}
+func (m StackData) Swap(i, j int) {
+	m[i], m[j] = m[j], m[i]
+}
+
+func (m StackData) Less(i, j int) bool {
+	return m[i].min < m[j].min
+}
+
+type MinStack struct {
+	Push    func(int)
+	Pop     func() int
+	Top     func() int
+	IsEmpty func() bool
+	Size    func() int
+	Min     func() int
+}
+
+func CreateMinStack() *MinStack {
+	elements := make([]MinData, 0)
+	return &MinStack{
+		Push: func(m int) {
+			mindata := MinData{
+				value: m,
+				min:   m,
+			}
+			if len(elements) > 0 {
+				n := len(elements)
+				last := elements[n-1]
+				mindata.min = min(mindata.min, last.min)
+			}
+			elements = append(elements, mindata)
+		},
+		Pop: func() int {
+			n := len(elements)
+			item := elements[n-1]
+			elements = elements[:n-1]
+			return item.value
+		},
+		Top: func() int {
+			n := len(elements)
+			item := elements[n-1]
+			return item.value
+		},
+		IsEmpty: func() bool {
+			return len(elements) == 0
+		},
+		Size: func() int {
+			return len(elements)
+		},
+		Min: func() int {
+			n := len(elements)
+			item := elements[n-1]
+			return item.min
+		},
+	}
+}
