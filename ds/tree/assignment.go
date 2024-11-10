@@ -81,3 +81,109 @@ func MaxAtEachLevel(root *Tree) []int {
 	return result
 }
 
+func IsSymetricTree(root *Tree) bool {
+	if root == nil || root.Left == nil && root.Right == nil {
+		return true
+	}
+	return IsSymetricTreeRec(root.Left, root.Left.Right)
+}
+
+func IsSymetricTreeRec(left, right *Tree) bool {
+	// both are empty tree
+	if left == nil  && right == nil {
+		return true
+	}
+	// either one is empty
+	if left == nil || right == nil {
+		return false
+	}
+	if left.Data != right.Data {
+		return false
+	}
+	return IsSymetricTreeRec(left.Left, right.Right) && IsSymetricTreeRec(left.Right, right.Left)
+}
+
+func TreePathSum(root *Tree) int {
+	sum := 0
+	num := 0
+	TreePathSumRec(root, num , &sum)
+	return sum
+}
+
+func TreePathSumRec(root *Tree, num int, sum *int) int {
+	// base case
+	if root == nil {
+		return *sum
+	}
+	num = 10 * num + root.Data
+	if root.Left == nil && root.Right == nil {
+		*sum = *sum + num
+		return *sum
+	}
+	// 1 case
+	return TreePathSumRec(root.Left, num, sum) + TreePathSumRec(root.Right, num, sum)
+	// recursion
+}
+
+func ConstructTreeFromInorderPreorder(preorder []int, inorder []int) *Tree {
+	preS := 0
+	inS := 0
+	inE := len(inorder)
+	inIndexMap := make(map[int]int, inE)
+	for i:= inS; i < inE; i++ {
+		inIndexMap[inorder[i]] = i
+	}
+	return constructBinarayTreeFromInorderPreorderRec(preorder, inorder, &preS, inS, inE, inIndexMap)
+}
+
+func constructBinarayTreeFromInorderPreorderRec(preorder []int, inorder []int, preS *int, inS, inE int, inIndexMap map[int]int) *Tree {
+	// baseCase
+	if *preS >= len(preorder) {
+		return nil
+	}
+
+	if inS > inE {
+		return nil
+	}
+	//
+	data := preorder[*preS]
+	node := &Tree{
+		Data :preorder[*preS],
+	}
+	in := inIndexMap[data]
+	*preS = *preS + 1
+	node.Left = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, inS, in -1 , inIndexMap)
+	node.Right = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, in + 1, inE, inIndexMap)
+	return node
+}
+
+func PreorderTraversal(root *Tree) []int {
+	result := []int{}
+	PreorderTraversalRec(root, &result)
+	return result
+}
+
+func PreorderTraversalRec(root *Tree, result *[]int) {
+	if root == nil {
+		return
+	}
+	*result = append(*result, root.Data)
+	PreorderTraversalRec(root.Left, result)
+	PreorderTraversalRec(root.Right, result)
+}
+
+func InorderTraversal(root *Tree) []int {
+	result := []int{}
+	InorderTraversalRec(root, &result)
+	return result
+}
+
+func InorderTraversalRec(root *Tree, result *[]int) {
+	if root == nil {
+		return
+	}
+	InorderTraversalRec(root.Left, result)
+	*result = append(*result, root.Data)
+	InorderTraversalRec(root.Right, result)
+}
+
