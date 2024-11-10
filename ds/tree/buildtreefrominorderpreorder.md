@@ -35,35 +35,62 @@ Output: [-1]
 package main
 import "fmt"
 
-func TreePathSum(root *Tree) int {
-	sum := 0
-	num := 0
-	TreePathSumRec(root, num , &sum)
-	return sum
+func PreorderTraversal(root *Tree) []int {
+	result := []int{}
+	PreorderTraversalRec(root, &result)
+	return result
 }
 
-func TreePathSumRec(root *Tree, num int, sum *int) int {
-	// base case
+func PreorderTraversalRec(root *Tree, result *[]int) {
 	if root == nil {
-		return *sum
+		return
 	}
-	num = 10 * num + root.Data
-	if root.Left == nil && root.Right == nil {
-		*sum = *sum + num
-		return *sum
+	*result = append(*result, root.Data)
+	PreorderTraversalRec(root.Left, result)
+	PreorderTraversalRec(root.Right, result)
+}
+
+func ConstructTreeFromInorderPreorder(preorder []int, inorder []int) *Tree {
+	preS := 0
+	inS := 0
+	inE := len(inorder)
+	inIndexMap := make(map[int]int, inE)
+	for i:= inS; i < inE; i++ {
+		inIndexMap[inorder[i]] = i
 	}
-	// 1 case
-	return TreePathSumRec(root.Left, num, sum) + TreePathSumRec(root.Right, num, sum)
-	// recursion
+	return constructBinarayTreeFromInorderPreorderRec(preorder, inorder, &preS, inS, inE, inIndexMap)
+}
+
+func constructBinarayTreeFromInorderPreorderRec(preorder []int, inorder []int, preS *int, inS, inE int, inIndexMap map[int]int) *Tree {
+	// baseCase
+	if *preS >= len(preorder) {
+		return nil
+	}
+
+	if inS > inE {
+		return nil
+	}
+	//
+	data := preorder[*preS]
+	node := &Tree{
+		Data :preorder[*preS],
+	}
+	in := inIndexMap[data]
+	*preS = *preS + 1
+	node.Left = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, inS, in -1 , inIndexMap)
+	node.Right = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, in + 1, inE, inIndexMap)
+	return node
 }
 // Function to initialize the recursion with starting indices of 0
 func main() {
-    nums := []int{6, 3, 2, 5,7,4,5,4}
-	tree := BuildTree(nums)
-    fmt.Println(TreePathSum(tree)) //  print : 13997
+    preorder := []int{3,9,20,15,7}
+	inorder :=[]int{9,3,15,20,7}
+	tree := ConstructTreeFromInorderPreorder(preorder, inorder)
+    fmt.Println(preorder, PreorderTraversal(tree)) //  print : 3,9,20,15,7
+	fmt.Println(PreorderTraversal(tree)) //  print : 3,9,20,15,7
 }
 
 Time Complexity = O(n)
-Space Complexity = O(n)
+Space Complexity = O(1)
 => where n is the lengths of the array, respectively.
 ```
