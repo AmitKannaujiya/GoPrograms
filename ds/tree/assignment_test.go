@@ -54,10 +54,43 @@ func TestTreePathSum(t *testing.T) {
 	assert.Equal(t, 13997, TreePathSum(tree))
 }
 
-func TestMain(t *testing.T) {
+func TestConstructTreeFromInorderPreorder(t *testing.T) {
 	preorder := []int{3,9,20,15,7}
 	inorder :=[]int{9,3,15,20,7}
 	tree := ConstructTreeFromInorderPreorder(preorder, inorder)
 	assert.Equal(t, preorder, PreorderTraversal(tree))
 	assert.Equal(t, inorder, InorderTraversal(tree))
+}
+func TestFindProfession(t *testing.T) {
+	assert.Equal(t, 'E', FindProfession(3, 4))
+	assert.Equal(t, 'D', FindProfession(4, 3))
+	assert.Equal(t, 'E', FindProfession(4, 6))
+	assert.Equal(t, 'D', FindProfession(2, 2))
+}
+
+func TestFindKthSmallestInBST(t *testing.T) {
+	tree := &Tree{
+		Data: 7,
+	}
+	tree.Left = &Tree{
+		Data: 5,
+	}
+	tree.Right = &Tree{
+		Data: 10,
+	}
+	tree.Left.Right = &Tree{
+		Data: 6,
+	}
+	tree.Left.Left = &Tree{
+		Data: 3,
+	}
+	tree.Right.Left = &Tree{
+		Data: 8,
+	}
+	tree.Right.Right = &Tree{
+		Data: 13,
+	}
+
+	assert.Equal(t, 6, FindKthSmallestInBST(tree, 3))
+	assert.Equal(t, 10, FindKthSmallestInBST(tree, 6))
 }

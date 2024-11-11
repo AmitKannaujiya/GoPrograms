@@ -1,6 +1,9 @@
 package tree
 
-import "math"
+import (
+	"math"
+	s "go-program/ds/stack"
+)
 
 type Tree struct {
 	Data  int
@@ -90,7 +93,7 @@ func IsSymetricTree(root *Tree) bool {
 
 func IsSymetricTreeRec(left, right *Tree) bool {
 	// both are empty tree
-	if left == nil  && right == nil {
+	if left == nil && right == nil {
 		return true
 	}
 	// either one is empty
@@ -106,7 +109,7 @@ func IsSymetricTreeRec(left, right *Tree) bool {
 func TreePathSum(root *Tree) int {
 	sum := 0
 	num := 0
-	TreePathSumRec(root, num , &sum)
+	TreePathSumRec(root, num, &sum)
 	return sum
 }
 
@@ -115,7 +118,7 @@ func TreePathSumRec(root *Tree, num int, sum *int) int {
 	if root == nil {
 		return *sum
 	}
-	num = 10 * num + root.Data
+	num = 10*num + root.Data
 	if root.Left == nil && root.Right == nil {
 		*sum = *sum + num
 		return *sum
@@ -130,7 +133,7 @@ func ConstructTreeFromInorderPreorder(preorder []int, inorder []int) *Tree {
 	inS := 0
 	inE := len(inorder)
 	inIndexMap := make(map[int]int, inE)
-	for i:= inS; i < inE; i++ {
+	for i := inS; i < inE; i++ {
 		inIndexMap[inorder[i]] = i
 	}
 	return constructBinarayTreeFromInorderPreorderRec(preorder, inorder, &preS, inS, inE, inIndexMap)
@@ -148,12 +151,12 @@ func constructBinarayTreeFromInorderPreorderRec(preorder []int, inorder []int, p
 	//
 	data := preorder[*preS]
 	node := &Tree{
-		Data :preorder[*preS],
+		Data: preorder[*preS],
 	}
 	in := inIndexMap[data]
 	*preS = *preS + 1
-	node.Left = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, inS, in -1 , inIndexMap)
-	node.Right = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, in + 1, inE, inIndexMap)
+	node.Left = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, inS, in-1, inIndexMap)
+	node.Right = constructBinarayTreeFromInorderPreorderRec(preorder, inorder, preS, in+1, inE, inIndexMap)
 	return node
 }
 
@@ -187,3 +190,44 @@ func InorderTraversalRec(root *Tree, result *[]int) {
 	InorderTraversalRec(root.Right, result)
 }
 
+//Consider a special family of Engineers and Doctors. This family has the following rules:
+
+//Everybody has two children. The first child of an Engineer is an Engineer and the second child is a Doctor.
+// The first child of a Doctor is a Doctor and the second child is an Engineer. All generations of Doctors and Engineers start with an Engineer.
+// We can represent the situation using this diagram:
+// 0 : E , 1 : D
+func FindProfession(level, pos int) rune {
+	p := FindProfessionRec(level, pos)
+	if p {
+		return 'E'
+	} else {
+		return 'D'
+	}
+}
+func FindProfessionRec(level, pos int) bool {
+
+	if level == 1 {
+		return true // enginer
+	}
+	if pos%2 == 1 {
+		return FindProfessionRec(level-1, (pos+1)/2)
+	} else {
+		return !FindProfessionRec(level-1, (pos+1)/2)
+	}
+}
+
+func FindKthSmallestInBST(root *Tree, k int) int {
+	stack := s.CreateStack[*Tree]()
+	for {
+		for root != nil {
+			stack.Push(root)
+			root = root.Left
+		}
+		k--
+		root, _ = stack.Pop()
+		if k == 0 {
+			return root.Data
+		}
+		root = root.Right
+	}
+}
