@@ -94,3 +94,7 @@ func TestFindKthSmallestInBST(t *testing.T) {
 	assert.Equal(t, 6, FindKthSmallestInBST(tree, 3))
 	assert.Equal(t, 10, FindKthSmallestInBST(tree, 6))
 }
+
+func TestIsDeadEndInBST(t *testing.T) {
+	
+}

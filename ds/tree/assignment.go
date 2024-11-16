@@ -3,6 +3,7 @@ package tree
 import (
 	"math"
 	s "go-program/ds/stack"
+	l "go-program/ds/list"
 )
 
 type Tree struct {
@@ -230,4 +231,89 @@ func FindKthSmallestInBST(root *Tree, k int) int {
 		}
 		root = root.Right
 	}
+}
+
+func IsDeadEndInBST(root *Tree, min , max int) bool {
+	if root == nil {
+		return true
+	}
+	if root.Left == nil && root.Right == nil {
+		return root.Data - min == 1 && max - root.Data == 1
+	}
+	return IsDeadEndInBST(root.Left, min, root.Data) ||  IsDeadEndInBST(root.Right, root.Data, max)
+}
+
+func LowestCommonAncesstor(root, p, q *Tree) *Tree {
+	if root == nil {
+		return nil
+	}
+	if root.Data > p.Data && root.Data > q.Data {
+		return LowestCommonAncesstor(root.Left, p, q)
+	} else if root.Data < p.Data && root.Data < q.Data {
+		return LowestCommonAncesstor(root.Right, p, q)
+	}
+	return root
+}
+
+func sortedListToBST(head *l.ListNode[int]) *Tree {
+    if head == nil  {
+        return nil
+    }
+    fast, slow := head, head
+    var prev *l.ListNode[int]
+    // get the middle node
+    for fast != nil {
+        fast = fast.Next
+        if fast != nil {
+            fast = fast.Next
+            prev = slow
+            slow = slow.Next
+        }
+    }
+    // break link
+    if prev != nil {
+        prev.Next = nil
+    } else {
+        head = nil
+    }
+    // create tree
+    root := &Tree{
+        Data : slow.Data,
+    }
+    root.Left = sortedListToBST(head) // start to mid -1 as prev is mid -1
+    root.Right = sortedListToBST(slow.Next) // mid +1 to end
+    return root
+}
+func sortedListToBSTold(head *l.ListNode[int]) *Tree {
+	nodeMap := make(map[int]int)
+	cur := head
+	index := 0
+	for cur != nil {
+		nodeMap[index] = cur.Data
+		cur = cur.Next
+		index++
+	}
+	start := 0
+	root := constructBSTFromMap(nodeMap, start, len(nodeMap)-1)
+	return root
+}
+
+func constructBSTFromMap(nodeMap map[int]int, start, end int) *Tree {
+	// base case
+	if start > end {
+		return nil
+	}
+	// 1 case
+	mid := start + (end-start)/2
+	data, exists := nodeMap[mid]
+	if !exists {
+		return nil
+	}
+	node := &Tree{
+		Data: data,
+	}
+	// recursion
+	node.Left = constructBSTFromMap(nodeMap, start, mid-1)
+	node.Right = constructBSTFromMap(nodeMap, mid+1, end)
+	return node
 }
