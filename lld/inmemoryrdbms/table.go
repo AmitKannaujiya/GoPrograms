@@ -7,28 +7,29 @@ import (
 
 type Table struct {
 	autoIncreamentedId int
-	tableName string
-	schema *Schema
-	rows []Row
-	mutex     sync.RWMutex
+	tableName          string
+	schema             *Schema
+	rows               []Row
+	mutex              sync.RWMutex
 }
 
 func NewTable(tableName string, schema *Schema) *Table {
 	return &Table{
 		autoIncreamentedId: 1,
-		tableName: tableName,
-		schema: schema,
-		rows: make([]Row, 0),
+		tableName:          tableName,
+		schema:             schema,
+		rows:               make([]Row, 0),
 	}
 }
 
-func(t *Table) Truncate() {
+func (t *Table) Truncate() {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
 	t.rows = make([]Row, 0)
 }
+
 // insert
-func(t *Table) Insert(row Row) error {
+func (t *Table) Insert(row Row) error {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
 
@@ -37,9 +38,9 @@ func(t *Table) Insert(row Row) error {
 		return err
 	}
 
-	// check unique 
+	// check unique
 
-	for _ , currentRow := range t.rows {
+	for _, currentRow := range t.rows {
 		if t.schema.IsDuplicate(currentRow, row) {
 			return errors.New("Duplicate row, unique constraints violated")
 		}
@@ -49,14 +50,15 @@ func(t *Table) Insert(row Row) error {
 	t.rows = append(t.rows, row)
 	return nil
 }
+
 // delete
-func(t *Table) Delete(condition func(Row) bool) int {
+func (t *Table) Delete(condition func(Row) bool) int {
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
 
 	deleteCount := 0
 	rows := make([]Row, 0)
-	for _ , currentRow := range t.rows {
+	for _, currentRow := range t.rows {
 		if condition(currentRow) {
 			deleteCount++
 		} else {
@@ -66,14 +68,15 @@ func(t *Table) Delete(condition func(Row) bool) int {
 	t.rows = rows
 	return deleteCount
 }
-// select 
-func(t *Table) Select(condition func(Row) bool) []Row {
+
+// select
+func (t *Table) Select(condition func(Row) bool) []Row {
 	t.mutex.RLock()
 	defer t.mutex.RUnlock()
 
 	var rows []Row
 
-	for _ , currentRow := range t.rows {
+	for _, currentRow := range t.rows {
 		if condition(currentRow) {
 			rows = append(rows, currentRow)
 		}
@@ -81,12 +84,12 @@ func(t *Table) Select(condition func(Row) bool) []Row {
 	return rows
 }
 
-// update 
+// update
 
-func(t *Table) Update(condition func(Row) bool, updateFunc func(*Row)) int {
+func (t *Table) Update(condition func(Row) bool, updateFunc func(*Row)) int {
 	t.mutex.RLock()
 	defer t.mutex.RUnlock()
-	updateCount :=0 
+	updateCount := 0
 	for i := range t.rows {
 		if condition(t.rows[i]) {
 			updateFunc(&t.rows[i])

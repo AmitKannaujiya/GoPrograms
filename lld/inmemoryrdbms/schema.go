@@ -32,12 +32,12 @@ func (s *Schema) ValidateRow(row Row) error {
 	return nil
 }
 
-func(s *Schema) IsTypeValid(types string, val interface{}) bool {
+func (s *Schema) IsTypeValid(types string, val interface{}) bool {
 	switch types {
-	case "INT" :
+	case "INT":
 		_, ok := val.(int)
 		return ok
-	case "STRING" :
+	case "STRING":
 		_, ok := val.(string)
 		return ok
 	default:
@@ -54,13 +54,14 @@ func (s *Schema) IsDuplicate(currentRow, row Row) bool {
 			}
 		}
 	}
+	return false
 }
 
-func(s *Schema) GetColIndex(col string) int {
+func (s *Schema) GetColIndex(col string) int {
 	for i, column := range s.columns {
 		if column == col {
 			return i
 		}
 	}
-	return -1 
+	return -1
 }

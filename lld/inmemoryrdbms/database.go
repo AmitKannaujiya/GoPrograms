@@ -7,21 +7,20 @@ import (
 
 type Database struct {
 	databaseName string
-	tables map[string]*Table
-	mutex     sync.RWMutex
-
+	tables       map[string]*Table
+	mutex        sync.RWMutex
 }
 
 func NewDatabase(databaseName string) *Database {
 	return &Database{
 		databaseName: databaseName,
-		tables: make(map[string]*Table),
+		tables:       make(map[string]*Table),
 	}
 }
 
 // create table
 
-func(d *Database) CreateTable(tableName string, schema *Schema) error {
+func (d *Database) CreateTable(tableName string, schema *Schema) error {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
 	if _, exists := d.tables[tableName]; exists {
@@ -31,9 +30,9 @@ func(d *Database) CreateTable(tableName string, schema *Schema) error {
 	return nil
 }
 
-// drop table 
+// drop table
 
-func(d *Database) DropTable(tableName string) error {
+func (d *Database) DropTable(tableName string) error {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
 	if _, exists := d.tables[tableName]; !exists {
@@ -45,10 +44,10 @@ func(d *Database) DropTable(tableName string) error {
 
 // truncate table
 
-func(d *Database) TruncateTable(tableName string) error {
+func (d *Database) TruncateTable(tableName string) error {
 	d.mutex.Lock()
 	defer d.mutex.Unlock()
-	table, exists := d.tables[tableName]; 
+	table, exists := d.tables[tableName]
 	if !exists {
 		return fmt.Errorf("table : %s does not exists", tableName)
 	}

@@ -7,6 +7,7 @@ import (
 
 var once sync.Once
 var singleDatabaseManager *DataBaseManager
+
 type DataBaseManager struct {
 	databases map[string]*Database
 	activeDB  *Database
@@ -34,7 +35,8 @@ func (dm *DataBaseManager) CreateDatabase(databaseName string) error {
 	dm.databases[databaseName] = NewDatabase(databaseName)
 	return nil
 }
-// delete database 
+
+// delete database
 func (dm *DataBaseManager) DeleteDatabase(databaseName string) error {
 	dm.mutex.Lock()
 	defer dm.mutex.Unlock()
@@ -44,6 +46,7 @@ func (dm *DataBaseManager) DeleteDatabase(databaseName string) error {
 	delete(dm.databases, databaseName)
 	return nil
 }
+
 // switch database
 func (dm *DataBaseManager) SwitchDatabase(databaseName string) error {
 	dm.mutex.Lock()
