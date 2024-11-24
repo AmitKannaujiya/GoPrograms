@@ -2,6 +2,7 @@ package arrays
 
 import (
 	"go-program/ds/utill"
+	"math"
 	_ "math"
 )
 
@@ -323,4 +324,60 @@ func StockBuyAndSellMultipleTimesApproach2(prices []int) int {
 		}
 	}
 	return maxProfit
+}
+
+func GetMaxMinDiffApproachOne(nums []int, k int) int {
+	min, max := math.MaxInt, math.MinInt
+	for i:= 0; i < len(nums); i++ {
+		if nums[i] - k >= 0 {
+			nums[i] -= k
+		} else {
+			nums[i] += k
+		}
+		if nums[i] > max {
+			max = nums[i]
+		}
+		if nums[i] < min {
+			min = nums[i]
+		}
+	}
+	return max - min
+}
+
+func GetMaxMinDiffApproachRecursive(nums []int, k int) int {
+	min, max := math.MaxInt, math.MinInt
+	return GetMaxMinDiffRecursive(nums, k, 0, min, max)
+}
+
+func GetMaxMinDiffRecursive(nums []int, k, index, mina, maxa int) int {
+	// base case
+	if index >= len(nums) {
+		return maxa - mina
+	}
+
+	// 1 case
+	minAns := math.MaxInt
+	maxAns := math.MinInt
+	if nums[index]- k >=0 {
+		nums[index] -= k
+		if mina > nums[index] {
+			mina = nums[index]
+		}
+		minAns = GetMaxMinDiffRecursive(nums, k , index + 1, mina, maxa)
+	} else {
+		nums[index] -= k
+		if mina > nums[index] {
+			mina = nums[index]
+		}
+		minAns = GetMaxMinDiffRecursive(nums, k , index + 1, mina, maxa)
+		nums[index] += k
+		if maxa < nums[index] {
+			maxa = nums[index]
+		}
+		minAns = GetMaxMinDiffRecursive(nums, k , index + 1, mina, maxa)
+	}
+	return min(maxAns - minAns)
+
+
+	// recursive
 }

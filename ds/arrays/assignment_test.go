@@ -19,3 +19,15 @@ func TestStockBuyAndSellMultipleTimesApproach2(t *testing.T) {
 	assert.Equal(t, 865, StockBuyAndSellMultipleTimesApproach2([]int{100, 180, 260, 310, 40, 535, 695}))
 	assert.Equal(t, 2, StockBuyAndSellMultipleTimesApproach2([]int{4, 2, 2, 2, 4}))
 }
+
+func TestGetMaxMinDiffApproachOne(t *testing.T) {
+	//assert.Equal(t, 5, GetMaxMinDiffApproachOne([]int{1, 5, 8, 10}, 2))
+	assert.Equal(t, 11, GetMaxMinDiffApproachOne([]int{3, 9, 12, 16, 20}, 3))
+
+}
+
+func TestGetMaxMinDiffApproachTwo(t *testing.T) {
+	assert.Equal(t, 5, GetMaxMinDiffApproachRecursive([]int{1, 5, 8, 10}, 2))
+	assert.Equal(t, 11, GetMaxMinDiffApproachRecursive([]int{3, 9, 12, 16, 20}, 3))
+
+}
