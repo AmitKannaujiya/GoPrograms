@@ -297,3 +297,30 @@ func possibleSumIterative(coins []int, quants []int) int {
 	delete(sumMap, 0)
 	return len(sumMap)
 }
+
+func StockBuyAndSellMultipleTimesApproach1(nums []int) int {
+	i, n, lMin, lMax, maxProfit := 0, len(nums), nums[0], nums[0], 0
+
+	for i < n - 1 {
+		for i < n - 1 && nums[i] >= nums[i + 1] {  // price is dropping
+			i++
+		}
+		lMin = nums[i] // last one is l min
+		for i < n - 1 && nums[i] <= nums[i + 1] {  // price is increasing
+			i++
+		}
+		lMax = nums[i] // last one is l Max
+		maxProfit += lMax - lMin
+	}
+	return maxProfit
+}
+
+func StockBuyAndSellMultipleTimesApproach2(prices []int) int {
+	maxProfit := 0
+	for i:=0; i< len(prices) - 1; i++ {
+		if prices[i] < prices[i + 1] {
+			maxProfit += prices[i+1] - prices[i]
+		}
+	}
+	return maxProfit
+}
