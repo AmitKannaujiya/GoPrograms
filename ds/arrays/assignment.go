@@ -381,3 +381,24 @@ func GetMaxMinDiffRecursive(nums []int, k, index, mina, maxa int) int {
 
 	// recursive
 }
+
+func longestSubstringWithKDistinctCharacters(str string, k int) int {
+	countMap := make(map[byte]int)
+
+	start, maxLen := 0, 0
+
+	for window:=0; window < len(str); window++ {
+		countMap[str[window]]++
+		for len(countMap) > k {
+			countMap[str[start]]--
+			if countMap[str[start]] == 0 {
+				delete(countMap, str[start])
+			}
+			start++
+		}
+		if len(countMap) == k {
+			maxLen = max(maxLen, window - start + 1)
+		}
+	}
+	return maxLen
+}

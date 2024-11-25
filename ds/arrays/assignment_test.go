@@ -31,3 +31,8 @@ func TestGetMaxMinDiffApproachTwo(t *testing.T) {
 	assert.Equal(t, 11, GetMaxMinDiffApproachRecursive([]int{3, 9, 12, 16, 20}, 3))
 
 }
+
+func TestLongestSubstringWithKDistinctCharacters(t *testing.T) {
+	assert.Equal(t, 5, longestSubstringWithKDistinctCharacters("aabcbbc", 2))
+	assert.Equal(t, 7, longestSubstringWithKDistinctCharacters("aabcbbccddcdc", 2))
+}
