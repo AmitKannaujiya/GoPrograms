@@ -402,3 +402,17 @@ func longestSubstringWithKDistinctCharacters(str string, k int) int {
 	}
 	return maxLen
 }
+
+func CheckIfArmStrongNo(num int) bool {
+	result := make([]int, 1)
+	originalNo := num
+	for originalNo > 0 {
+		result = append(result, originalNo % 10)
+		originalNo /= 10
+	}
+	sum := 0
+	for _, res := range result {
+		sum += res * res * res
+	}
+	return sum == num
+}

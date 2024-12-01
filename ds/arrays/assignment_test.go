@@ -36,3 +36,9 @@ func TestLongestSubstringWithKDistinctCharacters(t *testing.T) {
 	assert.Equal(t, 5, longestSubstringWithKDistinctCharacters("aabcbbc", 2))
 	assert.Equal(t, 7, longestSubstringWithKDistinctCharacters("aabcbbccddcdc", 2))
 }
+
+func TestCheckIfArmStrongNo(t *testing.T) {
+	assert.Equal(t, true, CheckIfArmStrongNo(153))
+	assert.Equal(t, false, CheckIfArmStrongNo(152))
+	assert.Equal(t, false, CheckIfArmStrongNo(111))
+}
