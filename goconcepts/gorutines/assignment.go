@@ -33,6 +33,7 @@ func executeTheJob(data [][]int) [][]int {
 	for i := 0; i < size; i++ {
 		output = append(output, <-result)
 	}
+	close(result)
 	wg.Wait()
 	return output
 }
