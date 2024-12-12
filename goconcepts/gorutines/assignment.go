@@ -1,8 +1,10 @@
 package gorutines
 
 import (
+	"fmt"
 	"math/rand"
 	"sync"
+	"time"
 )
 
 // caller api to get details from multiple guys
@@ -58,4 +60,25 @@ func getMinMax(nums []int) (int, int) {
 		}
 	}
 	return min, max
+}
+
+func producer(ch chan <-int) {
+	defer close(ch)
+	for i:=0; i< 5 ; i++ {
+		time.Sleep(1 * time.Second)
+		ch <- i
+	}
+}
+
+func consumer(ch <-chan int) {
+	for d := range ch {
+		fmt.Println(d)
+	}
+}
+
+func ProducerConsumer() {
+	ch := make(chan int)
+
+	go producer(ch)
+	consumer(ch)
 }

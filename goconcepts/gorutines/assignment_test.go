@@ -35,3 +35,7 @@ func TestWorkerPool(t *testing.T) {
 		fmt.Printf("worker id : %d, result : %v, error : %v\n",result.WorkerId, result.result, result.err)
 	}
 }
+
+func TestProducerConsumer(t *testing.T) {
+	ProducerConsumer()
+}
