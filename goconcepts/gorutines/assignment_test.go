@@ -39,3 +39,7 @@ func TestWorkerPool(t *testing.T) {
 func TestProducerConsumer(t *testing.T) {
 	ProducerConsumer()
 }
+
+func TestDoneChannelExample1(t *testing.T) {
+	DoneChannelExample()
+}

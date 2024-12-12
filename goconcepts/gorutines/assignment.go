@@ -82,3 +82,39 @@ func ProducerConsumer() {
 	go producer(ch)
 	consumer(ch)
 }
+
+func DoneChannelExample() {
+	job := make(chan int, 5)
+	done := make(chan int)
+	//var wg sync.WaitGroup
+	for i:=0; i < 5; i++ {
+		go func(){
+			workerJob(i, job, done)
+		}()
+	}
+	for i:=0; i < 5; i++ {
+		job <- i
+	}
+	close(job)
+
+	time.Sleep(1 * time.Second)
+	close(done)
+	time.Sleep(500 * time.Millisecond)
+}
+
+func workerJob(id int, job chan int, done chan int) {
+	for{
+		select {
+		case j, ok := <- job :
+			if ok {
+				fmt.Printf("worker : %d, job  :%d, started\n", id, j)
+				return
+			} else {
+				fmt.Printf("All Job done")
+			}
+		case <- done :
+			fmt.Println("Done signal received, exiting")
+			return
+		}
+	}
+}
