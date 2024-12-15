@@ -8,6 +8,7 @@ import (
 	o "go-program/designprinciples/observer"
 	s "go-program/designprinciples/strategy"
 	c "go-program/designprinciples/chainofresponsibility"
+	co "go-program/designprinciples/composite"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -110,4 +111,24 @@ func TestChainOfResponsibilityPattern1(t *testing.T) {
 	assert.Equal(t, 1, int(c.DEBUG))
 	assert.Equal(t, 2, int(c.INFO))
 	assert.Equal(t, 3, int(c.ERROR))
+}
+
+func TestComposite(t *testing.T) {
+	circle1 := co.Circle{Name: "Circle1"}
+	circle1.Draw()
+	rectangle1 := co.Rectangle{Name: "rectangle1"}
+	rectangle1.Draw()
+	circle2 := co.Circle{Name: "Circle2"}
+	rectangle2 := co.Rectangle{Name: "rectangle2"}
+	circle3 := co.Circle{Name: "Circle3"}
+	rectangle3 := co.Rectangle{Name: "rectangle3"}
+	circle4 := co.Circle{Name: "Circle4"}
+	composite := co.Composite{Name: "Composit group"}
+	composite.AddChild(&circle2)
+	composite.AddChild(&rectangle2)
+	composite.AddChild(&circle3)
+	composite.AddChild(&rectangle3)
+	composite.AddChild(&circle4)
+	composite.Draw()
+	assert.Equal(t, 5, composite.GetChildCount())
 }
