@@ -9,6 +9,7 @@ import (
 	s "go-program/designprinciples/strategy"
 	c "go-program/designprinciples/chainofresponsibility"
 	co "go-program/designprinciples/composite"
+	ad "go-program/designprinciples/adaptor"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -131,4 +132,10 @@ func TestComposite(t *testing.T) {
 	composite.AddChild(&circle4)
 	composite.Draw()
 	assert.Equal(t, 5, composite.GetChildCount())
+}
+
+func TestAdaptorPattern(t *testing.T) {
+	weightClient := ad.NewCalculatorClient(10)
+	assert.Equal(t, float32(4.5), weightClient.GetWeightInKg())
+	assert.Equal(t, float32(4.5/1000), weightClient.GetWeightInTonne())
 }
