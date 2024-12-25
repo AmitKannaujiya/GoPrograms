@@ -29,7 +29,7 @@ type IWeightConvertor interface {
 	SetWeight(int)
 }
 
-// Adapter Implementation
+// adapter Implementation
 
 type WeightConvertorImp struct {
 	weightMachine *WeightMachine

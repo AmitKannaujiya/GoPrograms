@@ -9,7 +9,7 @@ import (
 	s "go-program/designprinciples/strategy"
 	c "go-program/designprinciples/chainofresponsibility"
 	co "go-program/designprinciples/composite"
-	ad "go-program/designprinciples/adaptor"
+	ad "go-program/designprinciples/adapter"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -138,4 +138,19 @@ func TestAdaptorPattern(t *testing.T) {
 	weightClient := ad.NewCalculatorClient(10)
 	assert.Equal(t, float32(4.5), weightClient.GetWeightInKg())
 	assert.Equal(t, float32(4.5/1000), weightClient.GetWeightInTonne())
+}
+
+func TestDecoratorPattern2(t *testing.T) {
+	coffee :=  d.Coffee{20}
+
+	assert.Equal(t, 20 , coffee.GetPrice())
+
+	filterCoffee :=  d.FilterCoffee{coffee}
+
+	assert.Equal(t, 40 , filterCoffee.GetPrice())
+
+	creamCoffee :=  d.CreamCoffee{coffee}
+
+	assert.Equal(t, 45 , creamCoffee.GetPrice())
+
 }
