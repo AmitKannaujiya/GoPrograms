@@ -3,13 +3,13 @@ package designprinciples
 import (
 	"testing"
 
+	ad "go-program/designprinciples/adapter"
+	c "go-program/designprinciples/chainofresponsibility"
+	co "go-program/designprinciples/composite"
 	d "go-program/designprinciples/deccorator"
 	f "go-program/designprinciples/factory"
 	o "go-program/designprinciples/observer"
 	s "go-program/designprinciples/strategy"
-	c "go-program/designprinciples/chainofresponsibility"
-	co "go-program/designprinciples/composite"
-	ad "go-program/designprinciples/adapter"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -17,8 +17,8 @@ import (
 func TestStretegyPattern1(t *testing.T) {
 	normalStrategy := s.NormalDriveStrategy{}
 	vehicle := s.Vehicle{
-		Ty : "Normal",
-		IDS : normalStrategy,
+		Ty:  "Normal",
+		IDS: normalStrategy,
 	}
 
 	vehicle.Drive()
@@ -141,16 +141,16 @@ func TestAdaptorPattern(t *testing.T) {
 }
 
 func TestDecoratorPattern2(t *testing.T) {
-	coffee :=  d.Coffee{20}
+	coffee := d.Coffee{20}
 
-	assert.Equal(t, 20 , coffee.GetPrice())
+	assert.Equal(t, 20, coffee.GetPrice())
 
-	filterCoffee :=  d.FilterCoffee{coffee}
+	filterCoffee := d.FilterCoffee{coffee}
 
-	assert.Equal(t, 40 , filterCoffee.GetPrice())
+	assert.Equal(t, 40, filterCoffee.GetPrice())
 
-	creamCoffee :=  d.CreamCoffee{coffee}
+	creamCoffee := d.CreamCoffee{coffee}
 
-	assert.Equal(t, 45 , creamCoffee.GetPrice())
+	assert.Equal(t, 45, creamCoffee.GetPrice())
 
 }
