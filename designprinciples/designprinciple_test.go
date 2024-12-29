@@ -7,6 +7,7 @@ import (
 	c "go-program/designprinciples/chainofresponsibility"
 	co "go-program/designprinciples/composite"
 	d "go-program/designprinciples/deccorator"
+	fa "go-program/designprinciples/facade"
 	f "go-program/designprinciples/factory"
 	o "go-program/designprinciples/observer"
 	s "go-program/designprinciples/strategy"
@@ -142,15 +143,14 @@ func TestAdaptorPattern(t *testing.T) {
 
 func TestDecoratorPattern2(t *testing.T) {
 	coffee := d.Coffee{20}
-
 	assert.Equal(t, 20, coffee.GetPrice())
-
 	filterCoffee := d.FilterCoffee{coffee}
-
 	assert.Equal(t, 40, filterCoffee.GetPrice())
-
 	creamCoffee := d.CreamCoffee{coffee}
-
 	assert.Equal(t, 45, creamCoffee.GetPrice())
+}
 
+func TestFacadePattern(t *testing.T) {
+	facade := fa.NewComputer()
+	assert.True(t, facade.Start())
 }
