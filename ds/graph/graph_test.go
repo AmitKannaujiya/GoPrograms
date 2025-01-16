@@ -20,11 +20,23 @@ func TestGraphConnection(t *testing.T) {
 func TestGraphDFSTraversal1(t *testing.T) {
 	graph := Newgraph2()
 	graph.addEdge(1, 2, false)
-	// 0--> 1--> 2 --> 3
+	// 1--> 2 --> 3 --> 4
 	graph.addEdge(2, 3, false)
 	graph.addEdge(3, 0, false)
-	// 0--> 3--> 4
+	// 1 --> 4 --> 3
 	graph.addEdge(1, 4, false)
 	graph.addEdge(4, 3, false)
-	assert.Equal(t, []int{1,2,3,0,4},  dfsTraversal(graph, 1))
+	assert.Equal(t, []int{1, 2, 3, 0, 4}, dfsTraversal(graph, 1))
+}
+
+func TestGraphBFSTraversal1(t *testing.T) {
+	graph := Newgraph2()
+	graph.addEdge(1, 2, false)
+	// 1--> 2 --> 3 --> 4
+	graph.addEdge(2, 3, false)
+	graph.addEdge(3, 0, false)
+	// 1 --> 4 --> 3
+	graph.addEdge(1, 4, false)
+	graph.addEdge(4, 3, false)
+	assert.Equal(t, []int{1, 2, 4, 3, 0}, bfsTravesal(graph, 1))
 }

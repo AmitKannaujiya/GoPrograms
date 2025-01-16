@@ -25,12 +25,11 @@ func (g *graph2) addEdge(u, v int, directed bool) {
 	}
 }
 
-func dfsTraversal(g *graph2, src int) [] int {
+func dfsTraversal(g *graph2, src int) []int {
 	var result []int
 	if g == nil {
 		return result
 	}
-	result = make([]int, 0)
 	visited := make(map[int]struct{})
 	// handle disconnected component
 	// for i:=0; i < v; i++ {
@@ -55,3 +54,31 @@ func dfs(u int, adj map[int][]int, visited map[int]struct{}, result *[]int) {
 	}
 }
 
+func bfsTravesal(g *graph2, src int) []int {
+	var result []int
+	if g == nil {
+		return result
+	}
+	visited := make(map[int]struct{})
+	bfs(src, g.adjcencyList, visited, &result)
+	return result
+}
+
+func bfs(u int, adj map[int][]int, visited map[int]struct{}, result *[]int) {
+	if _, visit := visited[u]; visit {
+		return
+	}
+	visited[u] = struct{}{}
+	queue := []int{u}
+	for len(queue) > 0 {
+		node := queue[0]
+		*result = append(*result, node)
+		queue = queue[1:]
+		for _, nbr := range adj[node] {
+			if _, visit := visited[nbr]; !visit {
+				queue = append(queue, nbr)
+				visited[nbr] = struct{}{}
+			}
+		}
+	}
+}
