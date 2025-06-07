@@ -5,9 +5,11 @@ import (
 	dms "go-program/lld/dictionarysystem"
 	imd "go-program/lld/inmemoryrdbms"
 	rr "go-program/lld/reviewrating"
+	lru "go-program/lld/lru"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
 )
 
 func TestReviewRating(t *testing.T) {
@@ -58,6 +60,15 @@ func TestDictionaryManagementSystem(t *testing.T) {
 	assert.Nil(t, dictionarysystem.CreateDataset("dataset"))
 	assert.NotNil(t, dictionarysystem.CreateDataset("hindi"))
 	assert.Nil(t, dictionarysystem.DeleteDataset("dataset"))
+}
 
+func Test_LRUBasic(t *testing.T) {
+	lru := lru.NewLRU(3)
+	_, err := lru.Get(2)
+	assert.NotNil(t, err)
+	lru.Put(1, 2)
+	v1, _ := lru.Get(1)
+	assert.Equal(t, v1, 2)	
+	assert.E
 }
 
